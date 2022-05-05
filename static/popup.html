@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            width: 500px;
+            user-select: none;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .row {
+            margin-bottom: 10px;
+        }
+
+        
+        input[type="number"], select, label {
+            display: inline-block;
+            font-size: 16px;
+            padding: 5px;
+            width: 100px;
+        }
+        input[type="number"] {
+            text-align: center;
+        }
+
+        input:invalid {
+            outline: 1px solid red;
+        }
+
+
+        hr {
+            margin-top: 20px;
+        }
+
+        #tips {
+            margin: 20px 0px;
+        }
+
+        #tips > div {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        #tips > div:first-child {
+            font-style: italic;
+            font-size: 16px;
+        }
+
+        a:any-link {
+            color: blue; 
+        }
+    </style>
+</head>
+<body>
+    <h2>Enlarge Youtube Profile Images</h2>
+    <div class="row">
+        <label for="size">Image size</label>
+        <input id="size" type="number" placeholder="75" min="25" max="300" step="5"></input>
+    </div>
+    
+    <div class="row">
+        <label for="shape">Shape</label>
+        <select id="shape">
+            <option value="square">Square</option>
+            <option value="circle">Circle</option>
+        </select>
+    </div>
+    <hr>
+    <div id="tips">
+        <div>Tips</div>
+        <div>- Refresh Youtube for changes to take effect.</div>
+        <div>- Right click profile image to open full size version.</div>
+        <div>- Source code available on <a target="_blank" href="https://github.com/polywock/enlargeYoutubeProfileImages">Github</a>.</div>
+    </div>
+    <script src="./popup.js"></script>
+</body>
+</html>

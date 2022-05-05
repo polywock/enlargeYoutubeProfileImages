@@ -1,0 +1,18 @@
+{
+  "name": "Enlarge Youtube Profile Images",
+  "version": "0.0.1",
+  "description": "Control size of profile images in the Youtube comment section.",
+  "manifest_version": 2,
+  "permissions": ["storage"],
+  "browser_action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [{
+      "matches": ["https://*.youtube.com/*"],
+      "js": ["isolated.js"]
+  }],
+  "web_accessible_resources": ["main.js"],
+  "icons": {
+    "128": "icon128.png"
+  }
+}

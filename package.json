@@ -1,0 +1,11 @@
+{
+  "name": "eypi",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "rm -rf build && mkdir -p build/unpacked && cp -r static/. build/unpacked && cd build/unpacked && zip -r ../packed.zip .",
+    "buildFf": "rm -rf buildFf && mkdir -p buildFf/unpacked && cp -r static/. staticFf/. buildFf/unpacked && cd buildFf/unpacked && zip -r ../packed.zip ."
+  },
+  "dependencies": {
+    "@types/chrome": "0.0.154"
+  }
+}

@@ -1,0 +1,7 @@
+node_modules/
+.vscode/
+build/
+buildFf/
+Archive*
+*.md
+.DS_Store
