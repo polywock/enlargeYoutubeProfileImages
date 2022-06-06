@@ -1,21 +1,24 @@
 
 let size = 75 
-let square = true  
+let square = true 
+let noHover = false  
 sync()
 
-chrome.storage.local.get(["size", "square"], items => {
+chrome.storage.local.get(["size", "square", "noHover"], items => {
     size = items.size ?? 75 
     square = items.square ?? true 
+    noHover = items.noHover ?? false 
     sync() 
 })
 
 function sync() {
     window.size.value = size 
     window.shape.value = square ? "square" : "circle"
+    window.hover.checked = !noHover
 }
 
 function persist() {
-    chrome.storage.local.set({size, square})
+    chrome.storage.local.set({size, square, noHover})
 }
 
 window.size.addEventListener("change", e => {
@@ -33,3 +36,10 @@ window.shape.addEventListener("change", e => {
     sync() 
     persist()
 })
+
+window.hover.addEventListener("change", e => {
+    noHover = !e.target.checked 
+    sync() 
+    persist()
+})
+
