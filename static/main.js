@@ -18,7 +18,7 @@
         const {size, square} = JSON.parse(e.detail)
         const desc = Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, "src")
         Object.defineProperty(HTMLImageElement.prototype, "src", {configurable: true, enumerable: true, get: desc.get, set: function(value) {
-            if (value.includes("https://yt3.ggpht.com") && this.parentElement.classList.contains("ytd-comment-renderer") && !document.querySelector("ytd-comments.ytd-multi-page-menu-renderer")?.contains(this.parentElement)) {
+            if (value.includes("https://yt3.ggpht.com") && this.parentElement?.classList.contains("ytd-comment-renderer") && !document.querySelector("ytd-comments.ytd-multi-page-menu-renderer")?.contains(this.parentElement)) {
                 return desc.set.call(this, value.replace(/\=s\d+/, `=s${size}`))
             }
             return desc.set.call(this, value)
