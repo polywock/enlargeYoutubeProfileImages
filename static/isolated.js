@@ -94,6 +94,7 @@ function handleMouseOver(e) {
 
     const img = e.target
     if (!(img?.tagName === "IMG" && img.src.includes("https://yt3.ggpht.com"))) return 
+     
 
     const parent = img.parentElement
     if (!(parent?.tagName === "YT-IMG-SHADOW" && (parent.classList.contains("ytd-comment-renderer") || parent.classList.contains("ytd-video-owner-renderer")))) return 
@@ -103,7 +104,6 @@ function handleMouseOver(e) {
 }
 
 function handleMouseOut(e) {
-    activeRect && remove() 
-    e.stopImmediatePropagation()
+    activeRect && remove()
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "Enlarge Youtube Profile Images",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Control size of profile images in the Youtube comment section.",
   "manifest_version": 3,
   "permissions": ["storage"],
