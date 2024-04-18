@@ -9,9 +9,25 @@
             box-sizing: border-box;
         }
         body {
-            width: 500px;
+            width: max-content;
             user-select: none;
             font-family: Arial, Helvetica, sans-serif;
+        }
+
+        h3 {
+            text-align: center;
+        }
+
+        #main {
+            display: grid;
+            grid-template-columns: max-content max-content;
+
+            & > div {
+                padding: 0px 20px;
+                &:last-child {
+                    border-left: 1px solid #aaa;
+                }
+            }
         }
 
         .row {
@@ -59,21 +75,46 @@
 </head>
 <body>
     <h2>Enlarge Youtube Profile Images</h2>
-    <div class="row">
-        <label for="size">Image size</label>
-        <input id="size" type="number" placeholder="75" min="25" max="300" step="5"></input>
-    </div>
-    
-    <div class="row">
-        <label for="shape">Shape</label>
-        <select id="shape">
-            <option value="square">Square</option>
-            <option value="circle">Circle</option>
-        </select>
-    </div>
-    <div class="row">
-        <label for="hover">Hover zoom</label>
-        <input id="hover" type="checkbox" checked></input>
+
+    <div id="main">
+        <div>
+            <h3>Standard</h3>
+            <div class="row">
+                <label for="size">Image size</label>
+                <input id="size" type="number" placeholder="75" min="25" max="300" step="5"></input>
+            </div>
+            
+            <div class="row">
+                <label for="shape">Shape</label>
+                <select id="shape">
+                    <option value="square">Square</option>
+                    <option value="circle">Circle</option>
+                </select>
+            </div>
+            <div class="row">
+                <label for="hover">Hover zoom</label>
+                <input id="hover" type="checkbox" checked></input>
+            </div>
+        </div>
+        <div>
+            <h3>Youtube Shorts</h3>
+            <div class="row">
+                <label for="sizeAlt">Image size</label>
+                <input id="sizeAlt" type="number" placeholder="60" min="25" max="300" step="5"></input>
+            </div>
+            
+            <div class="row">
+                <label for="shapeAlt">Shape</label>
+                <select id="shapeAlt">
+                    <option value="square">Square</option>
+                    <option value="circle">Circle</option>
+                </select>
+            </div>
+            <div class="row">
+                <label for="hoverAlt">Hover zoom</label>
+                <input id="hoverAlt" type="checkbox" checked></input>
+            </div>
+        </div>
     </div>
     <hr>
     <div id="tips">

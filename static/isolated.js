@@ -1,13 +1,18 @@
 
+let noHover = false
+let noHoverAlt = false
+
 window.addEventListener("mouseover", handleMouseOver, {capture: true, passive: true})
 window.addEventListener("mouseout", handleMouseOut, {capture: true, passive: true})
 
 window.addEventListener("EYPI-I", e => {
     e.stopImmediatePropagation()
     chrome.storage.local.get(items => {
-        window.dispatchEvent(new CustomEvent("EYPI-M", {detail: JSON.stringify({size: items.size ?? 75, square: items.square ?? true})}))
+        window.dispatchEvent(new CustomEvent("EYPI-M", {detail: JSON.stringify({size: items.size ?? 75, square: items.square ?? true, sizeAlt: items.sizeAlt ?? 60, squareAlt: items.squareAlt ?? true})}))
 
-        if (items.noHover) {
+        noHover = items.noHover
+        noHoverAlt = items.noHoverAlt
+        if (items.noHover && items.noHoverAlt) {
             window.removeEventListener("mouseover", handleMouseOver, true) 
             window.removeEventListener("mouseout", handleMouseOver, true) 
         }
@@ -92,13 +97,16 @@ function remove() {
 function handleMouseOver(e) {
     activeRect && remove() 
 
+    
     const img = e.target
     if (!(img?.tagName === "IMG" && img.src.includes("https://yt3.ggpht.com"))) return 
-     
+    
+    if (!(e.target.closest("#author-thumbnail"))) return 
+    let isShorts = e.target.closest('ytd-engagement-panel-section-list-renderer') 
 
-    const parent = img.parentElement
-    if (!(parent?.tagName === "YT-IMG-SHADOW" && (parent.classList.contains("ytd-comment-renderer") || parent.classList.contains("ytd-video-owner-renderer")))) return 
-
+    if (noHoverAlt && isShorts) return
+    if (noHover && !isShorts) return 
+    
     e.stopImmediatePropagation();
     show(img.src.split("=")[0], img.getBoundingClientRect())
 }
