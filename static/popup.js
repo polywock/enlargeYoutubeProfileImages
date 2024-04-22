@@ -1,36 +1,36 @@
 
-let size = 75 
-let square = true 
+let size = 75  
+let rounding = 5
 let noHover = false  
 
 let sizeAlt = 60 
-let squareAlt = true 
+let roundingAlt = 5
 let noHoverAlt = false  
 sync()
 
-chrome.storage.local.get(["size", "square", "noHover", "sizeAlt", "squareAlt", "noHoverAlt"], items => {
+chrome.storage.local.get(["size", "square", "rounding", "noHover", "sizeAlt", "squareAlt", "roundingAlt", "noHoverAlt"], items => {
     size = items.size ?? 75 
-    square = items.square ?? true 
     noHover = items.noHover ?? false 
+    rounding = items.rounding ?? (items.square === false ? 100 : 0) 
 
     sizeAlt = items.sizeAlt ?? 60 
-    squareAlt = items.squareAlt ?? true 
+    roundingAlt = items.roundingAlt ?? (items.squareAlt === false ? 100 : 0) 
     noHoverAlt = items.noHoverAlt ?? false 
     sync() 
 })
 
 function sync() {
     window.size.value = size 
-    window.shape.value = square ? "square" : "circle"
+    window.shape.value = rounding
     window.hover.checked = !noHover
 
     window.sizeAlt.value = sizeAlt 
-    window.shapeAlt.value = squareAlt ? "square" : "circle"
+    window.shapeAlt.value = roundingAlt
     window.hoverAlt.checked = !noHoverAlt
 }
 
 function persist() {
-    chrome.storage.local.set({size, square, noHover, sizeAlt, squareAlt, noHoverAlt})
+    chrome.storage.local.set({size, rounding, noHover, sizeAlt, roundingAlt, noHoverAlt})
 }
 
 window.size.addEventListener("change", e => {
@@ -43,7 +43,8 @@ window.size.addEventListener("change", e => {
 })
 
 window.shape.addEventListener("change", e => {
-    square = e.target.value !== "circle"
+    rounding = e.target.valueAsNumber
+    console.log(rounding)
     sync() 
     persist()
 })
@@ -65,7 +66,7 @@ window.sizeAlt.addEventListener("change", e => {
 })
 
 window.shapeAlt.addEventListener("change", e => {
-    squareAlt = e.target.value !== "circle"
+    roundingAlt = e.target.valueAsNumber
     sync() 
     persist()
 })

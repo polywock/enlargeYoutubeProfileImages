@@ -13,7 +13,7 @@
 
     window.addEventListener("EYPI-M", e => {
         e.stopImmediatePropagation()
-        const {size, square, sizeAlt, squareAlt} = JSON.parse(e.detail)
+        const {size, rounding, sizeAlt, roundingAlt} = JSON.parse(e.detail)
         const desc = Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, "src")
         Object.defineProperty(HTMLImageElement.prototype, "src", {configurable: true, enumerable: true, get: desc.get, set: function(value) {
             let isShorts = this.closest('ytd-engagement-panel-section-list-renderer') 
@@ -25,13 +25,13 @@
         
         let s = document.createElement("style")
         s.innerHTML = `
-            #primary ytd-comment-view-model #author-thumbnail yt-img-shadow ${getBase(size, square)};
+            #primary ytd-comment-view-model #author-thumbnail yt-img-shadow ${getBase(size, rounding)};
         `
         document.documentElement.appendChild(s)
 
         s = document.createElement("style")
         s.innerHTML = `
-            ytd-shorts ytd-comment-view-model #author-thumbnail yt-img-shadow ${getBase(sizeAlt, squareAlt)}; 
+            ytd-shorts ytd-comment-view-model #author-thumbnail yt-img-shadow ${getBase(sizeAlt, roundingAlt)}; 
         `
         document.documentElement.appendChild(s)
     }, {once: true, capture: true})
@@ -40,8 +40,8 @@
 })()
 
 
-function getBase(size, square) {
-    return `{ height: ${size}px !important; width: ${size}px !important; border-radius: ${square ? "0px" : "50%"} !important; }` 
+function getBase(size, rounding) {
+    return `{ height: ${size}px !important; width: ${size}px !important; border-radius: ${rounding}px !important; }` 
 }
     
 

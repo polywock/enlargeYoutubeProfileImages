@@ -8,7 +8,7 @@ window.addEventListener("mouseout", handleMouseOut, {capture: true, passive: tru
 window.addEventListener("EYPI-I", e => {
     e.stopImmediatePropagation()
     chrome.storage.local.get(items => {
-        window.dispatchEvent(new CustomEvent("EYPI-M", {detail: JSON.stringify({size: items.size ?? 75, square: items.square ?? true, sizeAlt: items.sizeAlt ?? 60, squareAlt: items.squareAlt ?? true})}))
+        window.dispatchEvent(new CustomEvent("EYPI-M", {detail: JSON.stringify({size: items.size ?? 75, rounding: items.rounding ?? (items.square === false ? 100 : 0), sizeAlt: items.sizeAlt ?? 60, roundingAlt: items.roundingAlt ?? (items.square === false ? 100 : 0)})}))
 
         noHover = items.noHover
         noHoverAlt = items.noHoverAlt
