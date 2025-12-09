@@ -8,7 +8,8 @@ window.addEventListener("mouseout", handleMouseOut, {capture: true, passive: tru
 window.addEventListener("EYPI-I", e => {
     e.stopImmediatePropagation()
     chrome.storage.local.get(items => {
-        window.dispatchEvent(new CustomEvent("EYPI-M", {detail: JSON.stringify({size: items.size ?? 75, rounding: items.rounding ?? (items.square === false ? 100 : 0), sizeAlt: items.sizeAlt ?? 60, roundingAlt: items.roundingAlt ?? (items.square === false ? 100 : 0)})}))
+        const state = {size: items.size ?? 75, rounding: items.rounding ?? (items.square === false ? 100 : 0), sizeAlt: items.sizeAlt ?? 60, roundingAlt: items.roundingAlt ?? (items.square === false ? 100 : 0)}
+        window.dispatchEvent(new CustomEvent("EYPI-M", {detail: JSON.stringify(state)}))
 
         noHover = items.noHover
         noHoverAlt = items.noHoverAlt
@@ -16,8 +17,32 @@ window.addEventListener("EYPI-I", e => {
             window.removeEventListener("mouseover", handleMouseOver, true) 
             window.removeEventListener("mouseout", handleMouseOver, true) 
         }
-    })
-}, {once: true, capture: true})
+
+        const { size, sizeAlt, rounding, roundingAlt } = state 
+        let s = document.createElement("style")
+        s.innerHTML = `
+            #primary ytd-comment-view-model #author-thumbnail yt-img-shadow ${getBase(size, rounding)}
+            ytd-shorts ytd-comment-view-model #author-thumbnail yt-img-shadow ${getBase(sizeAlt, roundingAlt)} 
+
+            #primary ytd-comment-view-model #author-thumbnail > div.threadline { height: calc(100% - ${size}px) !important; width: 36px !important; }
+            #primary div.thread-hitbox { height: calc(100% - ${size}px) !important; }
+
+            ytd-shorts ytd-comment-view-model #author-thumbnail > div.threadline { height: calc(100% - ${sizeAlt}px) !important; width: 24px !important; }
+            ytd-shorts div.thread-hitbox { height: calc(100% - ${sizeAlt}px) !important; }
+            `
+            document.documentElement.appendChild(s)
+            
+            
+        })
+    }, {once: true, capture: true})
+
+// Make threadlines larger approach (Not using it for now, instead keeping the small original threadlines)
+// #primary yt-sub-thread.ytSubThreadHost > div.ytSubThreadThreadline { width: ${size}px !important }
+// #primary ytd-comment-view-model #author-thumbnail > div.threadline { height: calc(100% - ${size}px) !important }
+// #primary div.thread-hitbox { width: ${size}px !important; height: calc(100% - ${size}px) !important; }
+// ytd-shorts yt-sub-thread.ytSubThreadHost > div.ytSubThreadThreadline { width: ${sizeAlt}px !important }
+// ytd-shorts ytd-comment-view-model #author-thumbnail > div.threadline { height: calc(100% - ${sizeAlt}px) !important }
+// ytd-shorts div.thread-hitbox { width: ${sizeAlt}px !important; height: calc(100% - ${sizeAlt}px) !important; }
 
 const s = document.createElement("script")
 s.src = chrome.runtime.getURL("main.js")
@@ -115,3 +140,6 @@ function handleMouseOut(e) {
     activeRect && remove()
 }
 
+function getBase(size, rounding) {
+    return `{ height: ${size}px !important; width: ${size}px !important; border-radius: ${rounding}px !important; }` 
+}
